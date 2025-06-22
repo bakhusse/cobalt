@@ -23,13 +23,22 @@ from flask import Flask, request, Response, redirect, session as flask_session, 
 import uuid
 import requests
 
+def load_config(path="config.txt"):
+    config = {}
+    with open(path, "r") as f:
+        for line in f:
+            if "=" in line:
+                key, value = line.strip().split("=", 1)
+                config[key] = value
+    return config
+
+cfg = load_config()
+TOKEN = cfg["TOKEN"]
+BASE_URL = cfg["BASE_URL"]
+
+
 # Токен Telegram-бота
-TOKEN = "7690678050:AAGBwTdSUNgE7Q6Z2LpE6481vvJJhetrO-4"
 bot = Bot(TOKEN)
-
-# Базовый URL вашего веб-прокси/Flask-сервера
-BASE_URL = os.getenv("BASE_URL", "https://mpets.duckdns.org/")
-
 
 # Путь к файлу для хранения сессий
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -154,7 +163,7 @@ async def add_session(update: Update, context: CallbackContext):
         return
     # Формируем URL для открытия WebApp (мини-приложения)
     tgid = user_id
-    webapp_url = f"https://mpets.duckdns.org//?tgid={tgid}&name={session_name}"
+    webapp_url = f"https://{BASE_URL}/?tgid={tgid}&name={session_name}"
     # Кнопка для открытия мини-приложения
     web_app_info = WebAppInfo(url=webapp_url)
     button = InlineKeyboardButton("🔑 Авторизоваться через MPets", web_app=web_app_info)
