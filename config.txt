@@ -1,5 +1,5 @@
-TOKEN=ВАШ_ТОКЕН_ТГ
-BASE_URL=https://ВАШ_URL
+TOKEN=7775307986:AAFjcCTHDpTDktTSRSg1J5IawQKrx_SQSm8
+BASE_URL=https://test-mpets.duckdns.org
 
 
   // рекомендуем использовать duckdns.org при размещении бота на серверах
